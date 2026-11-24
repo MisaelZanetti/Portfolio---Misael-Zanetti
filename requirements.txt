@@ -6,3 +6,4 @@ PyMySQL
 python-dotenv
 email-validator
 Jinja2
+gunicorn
