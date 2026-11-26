@@ -1,2 +1,64 @@
-{# Estudios (y experiencia, a definir) #}
 {% extends 'base.html' %}
+
+{% block title %}Estudios — Misael Zanetti{% endblock %}
+{% block body_class %}pagina-estudios{% endblock %}
+
+{% block content %}
+<section class="studies-hero" aria-labelledby="studies-title">
+  <div class="studies-index"><span>03</span><span>ESTUDIOS</span></div>
+  <div class="studies-hero-copy">
+    <h1 id="studies-title">Aprender<br>es parte del <span>trabajo.</span></h1>
+    <p>Un registro de formación y experiencias que refleja el camino recorrido y todo lo que queda por aprender.</p>
+  </div>
+  <span class="studies-updated">ACTUALIZADO · 2026</span>
+</section>
+
+<section class="study-records" aria-labelledby="education-title">
+  <header class="record-section-heading">
+    <span>01 / FORMACIÓN</span>
+    <h2 id="education-title">Estudios</h2>
+    <span>FORMACIÓN Y APRENDIZAJE</span>
+  </header>
+  {% if estudios %}
+  <div class="record-list">
+    {% for estudio in estudios %}
+    <article class="record-row">
+      <span class="record-code">EDU.{{ '%02d'|format(loop.index) }}</span>
+      <div class="record-name"><h3>{{ estudio.institucion }}</h3><p>{{ estudio.titulo }}</p></div>
+      <div class="record-meta"><span>{{ estudio.fecha_inicio.strftime('%Y') }} — {{ estudio.fecha_fin.strftime('%Y') if estudio.fecha_fin else 'ACTUALIDAD' }}</span><span>Formación académica</span></div>
+      <span class="record-arrow" aria-hidden="true">↗</span>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="records-empty">Todavía no hay estudios para mostrar.</p>
+  {% endif %}
+</section>
+
+<section class="experience-records" aria-labelledby="experience-title">
+  <header class="record-section-heading">
+    <span>02 / RECORRIDO</span>
+    <h2 id="experience-title">Experiencia laboral</h2>
+    <span>EXPERIENCIAS Y COLABORACIONES</span>
+  </header>
+  {% if experiencias %}
+  <div class="record-list">
+    {% for experiencia in experiencias %}
+    <article class="record-row">
+      <span class="record-code">EXP.{{ '%02d'|format(loop.index) }}</span>
+      <div class="record-name"><h3>{{ experiencia.empresa }}</h3><p>{{ experiencia.puesto }}</p></div>
+      <div class="record-meta"><span>{{ experiencia.fecha_inicio.strftime('%Y') }} — {{ experiencia.fecha_fin.strftime('%Y') if experiencia.fecha_fin else 'ACTUALIDAD' }}</span><span>Experiencia profesional</span></div>
+      <span class="record-arrow" aria-hidden="true">↗</span>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="records-empty">Todavía no hay experiencias para mostrar.</p>
+  {% endif %}
+</section>
+
+<section class="studies-outro" aria-label="Cierre">
+  <span class="studies-outro-arrow" aria-hidden="true">↗</span>
+  <p>Este recorrido sigue creciendo.<br><span>Próxima actualización: pronto.</span></p>
+</section>
+{% endblock %}
