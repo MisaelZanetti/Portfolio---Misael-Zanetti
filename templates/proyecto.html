@@ -1,2 +1,40 @@
-{# Detalle de un proyecto: galeria (proyecto_imagen) e IFRAME con el proyecto corriendo (consigna, punto 3) #}
 {% extends 'base.html' %}
+
+{% block title %}{{ proyecto.titulo }} — Misael Zanetti{% endblock %}
+{% block body_class %}pagina-proyecto{% endblock %}
+
+{% block content %}
+<section class="project-detail-hero" style="--project-color: {{ proyecto.color }}" data-project-detail-color="{{ proyecto.color }}">
+  <a class="project-back" href="{{ url_for('proyectos') }}">← TODOS LOS PROYECTOS</a>
+  <div class="project-detail-heading">
+    <span class="project-detail-year">PROYECTO / {{ proyecto.anio }}</span>
+    <h1>{{ proyecto.titulo }}<span>.</span></h1>
+    {% if proyecto.resumen %}<p>{{ proyecto.resumen }}</p>{% endif %}
+  </div>
+  <span class="project-detail-index">{{ '%02d'|format(proyecto.id_proyecto) }}</span>
+</section>
+
+<section class="project-detail-body">
+  <div class="project-detail-copy">
+    <span class="eyebrow">SOBRE EL PROYECTO</span>
+    <div>
+      {% if proyecto.descripcion %}<p>{{ proyecto.descripcion }}</p>{% else %}<p>{{ proyecto.resumen or proyecto.titulo }}</p>{% endif %}
+      {% if tecnologias %}
+      <ul class="project-tech-list" aria-label="Tecnologías utilizadas">
+        {% for tecnologia in tecnologias %}<li>{{ tecnologia.nombre }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      <div class="project-detail-links">
+        {% if proyecto.link_demo %}<a href="{{ proyecto.link_demo }}" target="_blank" rel="noopener noreferrer">VER PROYECTO ↗</a>{% endif %}
+        {% if proyecto.link_repo %}<a href="{{ proyecto.link_repo }}" target="_blank" rel="noopener noreferrer">VER CÓDIGO ↗</a>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% if proyecto.imagen or imagenes %}
+  <div class="project-gallery">
+    {% if proyecto.imagen %}<figure><img src="{{ url_for('static', filename=proyecto.imagen) }}" alt="{{ proyecto.titulo }}"></figure>{% endif %}
+    {% for imagen in imagenes %}<figure><img src="{{ url_for('static', filename=imagen.ruta) }}" alt="{{ imagen.texto_alt or proyecto.titulo }}"></figure>{% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

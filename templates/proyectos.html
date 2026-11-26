@@ -1,2 +1,40 @@
-{# Lista de proyectos: el fondo cambia de color en cada hover (campo proyecto.color) #}
 {% extends 'base.html' %}
+
+{% block title %}Proyectos — Misael Zanetti{% endblock %}
+{% block body_class %}pagina-proyectos{% endblock %}
+
+{% block content %}
+<section class="projects-hero" aria-labelledby="projects-title">
+  <div class="projects-index"><span>04</span><span>PROYECTOS</span></div>
+  <div class="projects-hero-copy">
+    <h1 id="projects-title">Trabajo<br>seleccionado<span>.</span></h1>
+    <p>Experimentos, aprendizajes y productos digitales realizados en {{ proyectos[0].anio if proyectos else '2026' }}.</p>
+  </div>
+</section>
+
+<section class="projects-list" aria-label="Lista de proyectos" data-project-list>
+  {% if proyectos %}
+    {% for proyecto in proyectos %}
+    {% if loop.changed(proyecto.anio) %}
+    <div class="project-year-divider" aria-label="Proyectos del año {{ proyecto.anio }}">
+      <span>{{ proyecto.anio }}</span><span>PROYECTOS</span>
+    </div>
+    {% endif %}
+    <a class="project-row" href="{{ url_for('proyecto', proyecto_id=proyecto.id_proyecto) }}"
+       style="--project-color: {{ proyecto.color }}; --project-order: {{ loop.index0 }}" data-project-row data-project-color="{{ proyecto.color }}">
+      <span class="project-number">{{ '%02d'|format(loop.index) }}</span>
+      <span class="project-year">{{ proyecto.anio }}</span>
+      <span class="project-name">{{ proyecto.titulo }}</span>
+      <span class="project-summary">{{ proyecto.resumen or 'Proyecto digital en desarrollo.' }}</span>
+      <span class="project-arrow" aria-hidden="true">↗</span>
+    </a>
+    {% endfor %}
+    <div class="projects-list-footer"><span>TODOS LOS PROYECTOS · {{ proyectos[0].anio }}</span><span>PASÁ EL CURSOR PARA EXPLORAR</span></div>
+  {% else %}
+    <p class="projects-empty">Pronto vas a encontrar proyectos nuevos por acá.</p>
+  {% endif %}
+</section>
+<div class="project-transition" data-project-transition aria-hidden="true"></div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/proyectos.js') }}" defer></script>{% endblock %}

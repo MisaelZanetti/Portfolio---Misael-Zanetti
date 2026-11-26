@@ -2,6 +2,44 @@
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const siteMenu = document.querySelector("[data-site-menu]");
 
+// En la ficha del proyecto, ajusta contraste y color del header al acento elegido.
+const projectDetail = document.querySelector("[data-project-detail-color]");
+if (projectDetail) {
+  const projectColor = projectDetail.dataset.projectDetailColor;
+  const hex = projectColor.replace("#", "");
+  const channels = /^[\da-f]{6}$/i.test(hex) ? [0, 2, 4].map((start) => parseInt(hex.slice(start, start + 2), 16) / 255) : [1, 1, 1];
+  const linear = channels.map((channel) => channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4);
+  const luminance = .2126 * linear[0] + .7152 * linear[1] + .0722 * linear[2];
+  const darkAccent = luminance < .179;
+  document.body.style.setProperty("--project-color", projectColor);
+  projectDetail.style.setProperty("--project-ink", darkAccent ? "#f5f5f5" : "#0c0c0c");
+  document.body.classList.add(darkAccent ? "project-detail-dark" : "project-detail-light");
+}
+
+// Cambia el contraste del header cuando cruza una sección de fondo oscuro.
+const darkHeaderSections = document.querySelectorAll(".about-tech, .site-footer");
+if (darkHeaderSections.length) {
+  let headerCheckQueued = false;
+  const updateHeaderContrast = () => {
+    headerCheckQueued = false;
+    const header = document.querySelector(".site-header");
+    const headerLine = header ? header.getBoundingClientRect().height / 2 : 53;
+    const overDarkSection = Array.from(darkHeaderSections).some((section) => {
+      const bounds = section.getBoundingClientRect();
+      return bounds.top <= headerLine && bounds.bottom > headerLine;
+    });
+    document.body.classList.toggle("header-on-dark", overDarkSection);
+  };
+  const queueHeaderContrastUpdate = () => {
+    if (headerCheckQueued) return;
+    headerCheckQueued = true;
+    window.requestAnimationFrame(updateHeaderContrast);
+  };
+  window.addEventListener("scroll", queueHeaderContrastUpdate, { passive: true });
+  window.addEventListener("resize", queueHeaderContrastUpdate);
+  updateHeaderContrast();
+}
+
 if (menuToggle && siteMenu) {
   let closeMenuTimer;
   const setMenuOpen = (open) => {
