@@ -1,1 +1,8 @@
-{# Logo a la izquierda (gris, negro en hover) y boton de menu a la derecha #}
+<header class="site-header">
+  <a class="brand-mark" href="{{ url_for('inicio') }}" aria-label="Misael, ir al inicio">
+    <img class="brand-logo" src="{{ url_for('static', filename='img/MZ - Horizontal.svg') }}" alt="">
+  </a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+    <span></span><span></span>
+  </button>
+</header>

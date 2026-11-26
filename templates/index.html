@@ -1,2 +1,110 @@
-{# Inicio: circulo de minijuegos con los logitos para cambiar de juego #}
 {% extends 'base.html' %}
+
+{% block title %}Inicio — Misael Zanetti{% endblock %}
+{% block body_class %}pagina-inicio{% endblock %}
+
+{% block content %}
+<section class="home-hero" aria-labelledby="home-title">
+  <p class="side-note">PORTAFOLIO PERSONAL <span>·</span> BUENOS AIRES</p>
+
+  <div class="home-intro">
+    <p class="eyebrow">HOLA, SOY</p>
+    <h1 id="home-title">Misael<span class="home-period">.</span></h1>
+    <p class="home-role">Estudiante de tecnología</p>
+  </div>
+
+  <div class="game-orbit" aria-label="Selector de minijuegos">
+    <div class="game-disc" id="game-disc" data-game="memotest">
+      <div class="game-preview game-preview-memotest" data-preview="memotest" aria-hidden="false">
+        <header class="memotest-heading">
+          <div class="memotest-instructions">
+            <span class="memotest-kicker">MINIJUEGO / 01</span>
+            <h2>Encontrá los pares</h2>
+            <p>Da vuelta dos cartas y buscá los logos iguales.</p>
+          </div>
+          <div class="memotest-score" aria-live="polite">
+            <strong data-memotest-score>0</strong><span>/ 8</span>
+          </div>
+        </header>
+        <div class="memotest-grid" data-memotest-grid role="group" aria-label="Tablero de Memotest, 4 por 4"></div>
+        <div class="memotest-controls">
+          <p data-memotest-status role="status" aria-live="polite">Encontrá las 8 parejas.</p>
+          <button type="button" data-memotest-reset>Mezclar <span aria-hidden="true">↻</span></button>
+        </div>
+      </div>
+      <div class="game-preview game-preview-snake" data-preview="snake" aria-hidden="true" hidden>
+        <section class="snake-setup" data-snake-setup aria-labelledby="snake-title">
+          <div class="snake-setup-heading">
+            <span class="memotest-kicker">MINIJUEGO / 02</span>
+            <h2 id="snake-title">Prepará tu partida</h2>
+            <p>Elegí los colores y la velocidad antes de empezar.</p>
+          </div>
+          <div class="snake-settings">
+            <fieldset class="snake-setting">
+              <legend>Color del snake</legend>
+              <div class="snake-swatches" data-snake-color="snake" aria-label="Elegí el color del snake"></div>
+            </fieldset>
+            <fieldset class="snake-setting">
+              <legend>Color de la fruta</legend>
+              <div class="snake-swatches" data-snake-color="fruit" aria-label="Elegí el color de la fruta"></div>
+            </fieldset>
+            <fieldset class="snake-setting snake-speed-setting">
+              <legend>Velocidad</legend>
+              <div class="snake-speed-options">
+                <button type="button" data-snake-speed="slow" aria-pressed="true">Tranquila</button>
+                <button type="button" data-snake-speed="normal" aria-pressed="false">Normal</button>
+                <button type="button" data-snake-speed="fast" aria-pressed="false">Rápida</button>
+              </div>
+            </fieldset>
+          </div>
+          <button class="snake-start" type="button" data-snake-start>Empezar partida <span aria-hidden="true">→</span></button>
+        </section>
+        <section class="snake-play" data-snake-play hidden aria-label="Partida de Snake">
+          <header class="snake-play-header">
+            <div><span class="memotest-kicker">MINIJUEGO / 02</span><h2>Snake</h2></div>
+            <p>Puntos <strong data-snake-score>0</strong></p>
+          </header>
+          <canvas class="snake-board" data-snake-board aria-label="Tablero de Snake. Usá las flechas o WASD para moverte."></canvas>
+          <footer class="snake-play-footer"><p data-snake-status role="status" aria-live="polite">Usá las flechas o WASD para moverte.</p><button type="button" data-snake-restart>Reiniciar ↻</button></footer>
+        </section>
+      </div>
+      <div class="game-preview game-preview-wordle" data-preview="wordle" aria-hidden="true" hidden>
+        <section class="wordle-game" data-wordle-game aria-labelledby="wordle-title">
+          <header class="wordle-heading">
+            <div><span class="memotest-kicker">MINIJUEGO / 03</span><h2 id="wordle-title">Adiviná la empresa</h2><p>Puede ser cualquier palabra de la misma cantidad de letras. Tenés seis intentos.</p></div>
+            <span class="wordle-attempt-count" data-wordle-count>0 / 6</span>
+          </header>
+          <div class="wordle-board" data-wordle-board role="grid" aria-label="Tablero de Wordle"></div>
+          <form class="wordle-form" data-wordle-form autocomplete="off">
+            <label class="visually-hidden" for="wordle-guess">Tu intento</label>
+            <input id="wordle-guess" data-wordle-input type="text" maxlength="11" placeholder="Escribí una palabra" autocapitalize="characters" spellcheck="false" aria-describedby="wordle-status">
+            <button type="submit" data-wordle-submit>Probar ↵</button>
+            <button type="button" data-wordle-reset aria-label="Nueva palabra" title="Nueva palabra">↻</button>
+          </form>
+          <p class="wordle-status" data-wordle-status id="wordle-status" role="status" aria-live="polite">Escribí una palabra que tenga la cantidad de letras indicada.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <aside class="game-picker" aria-label="Elegí un juego">
+    <p class="picker-description">No sé a vos, pero a mí me gusta jugar.</p>
+    <button class="game-option is-active" type="button" data-game-select="memotest" aria-pressed="true">
+      <span class="game-option-icon">M</span><span class="game-option-name">Memotest</span>
+    </button>
+    <button class="game-option" type="button" data-game-select="snake" aria-pressed="false">
+      <span class="game-option-icon">S</span><span class="game-option-name">Snake</span>
+    </button>
+    <button class="game-option" type="button" data-game-select="wordle" aria-pressed="false">
+      <span class="game-option-icon">W</span><span class="game-option-name">Wordle</span>
+    </button>
+  </aside>
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/juegos/memotest.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/juegos/snake.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/juegos/wordle.js') }}" defer></script>
+{% endblock %}

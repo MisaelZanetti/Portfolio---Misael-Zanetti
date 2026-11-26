@@ -1,1 +1,39 @@
-{# Footer: letras cambiando todo el tiempo y los contactos (tabla contacto) #}
+{% set es_inicio = request.endpoint == 'inicio' %}
+<footer class="site-footer{% if es_inicio %} site-footer-home{% endif %}" id="contacto">
+  {% if not es_inicio %}
+  <div class="footer-topline">
+    <span>¿CREAMOS ALGO JUNTOS?</span>
+    <span>DISPONIBLE PARA NUEVOS PROYECTOS <b>·</b> 2026</span>
+  </div>
+  <div class="letter-field" data-letter-field aria-hidden="true">Q 0 V = W C U N G X T P / = ; } M A W N A T J V { D W K M # Q X X P W A I H &gt; R Y U Q A # P F R R O }</div>
+  {% endif %}
+
+  <div class="footer-contacts">
+    <div class="contact-row">
+      <span class="contact-symbol" aria-hidden="true">mail</span><span class="contact-label">Email</span>
+      <span class="contact-value">TU EMAIL</span><span class="material-symbols-outlined" aria-hidden="true">north_east</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-symbol" aria-hidden="true">code</span><span class="contact-label">GitHub</span>
+      <span class="contact-value">TU USUARIO</span><span class="material-symbols-outlined" aria-hidden="true">north_east</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-symbol" aria-hidden="true">work</span><span class="contact-label">LinkedIn</span>
+      <span class="contact-value">TU PERFIL</span><span class="material-symbols-outlined" aria-hidden="true">north_east</span>
+    </div>
+  </div>
+
+  {% if es_inicio %}
+  <div class="footer-home-brand">
+    <img class="footer-miza" src="{{ url_for('static', filename='img/MIZA - 2X2 - Sin bordes.svg') }}" alt="MIZA">
+  </div>
+  {% else %}
+  <div class="footer-bottomline">
+    <div class="footer-signature">
+      <img class="footer-miza" src="{{ url_for('static', filename='img/MIZA - 2X2 - Sin bordes.svg') }}" alt="MIZA">
+      <span>© MISAEL 2026</span>
+    </div>
+    <a href="{{ url_for('inicio') }}">VOLVER AL INICIO ↑</a>
+  </div>
+  {% endif %}
+</footer>
