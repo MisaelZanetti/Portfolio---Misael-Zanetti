@@ -1,2 +1,79 @@
-{# Sobre mi: estilo roxyshi, con foto. Aca van tambien las habilidades (pendiente definir) #}
 {% extends 'base.html' %}
+
+{% block title %}Sobre mí — Misael Zanetti{% endblock %}
+{% block body_class %}pagina-sobre-mi{% endblock %}
+
+{% block content %}
+{% set habilidades_blandas = habilidades|selectattr('tipo', 'equalto', 'blanda')|list %}
+{% set habilidades_duras = habilidades|selectattr('tipo', 'equalto', 'dura')|list %}
+{% set tecnologias_base = [
+  {'nombre': 'React', 'marca': '⚛'}, {'nombre': 'Vite', 'marca': 'ϟ'},
+  {'nombre': 'JavaScript', 'marca': 'JS'}, {'nombre': 'Python', 'marca': 'Py'},
+  {'nombre': 'Flask', 'marca': 'F'}, {'nombre': 'MySQL', 'marca': '⌘'},
+  {'nombre': 'Git', 'marca': '⑂'}
+] %}
+
+<section class="about-intro" aria-labelledby="about-title">
+  <div class="about-index"><span>02</span><span>SOBRE MÍ</span></div>
+  <div class="about-intro-grid">
+    <h1 id="about-title">¡Hola!<br>Soy {{ perfil.nombre if perfil and perfil.nombre else 'Misael' }}<span class="home-period">.</span></h1>
+    <div class="about-copy">
+      <p>{{ perfil.descripcion if perfil and perfil.descripcion else 'Soy estudiante de tecnología y disfruto entender cómo funcionan las cosas. Me interesa transformar preguntas en experiencias digitales simples.' }}</p>
+      <p>Aprendo haciendo: pruebo, rompo, vuelvo a empezar y documento el proceso. Creo en el código claro y en las decisiones con intención.</p>
+      <p>Fuera de la pantalla, busco nuevas referencias y pequeñas ideas para practicar. Este portfolio es un registro de ese camino en construcción.</p>
+    </div>
+  </div>
+
+  <div class="about-portrait-row">
+    <div aria-hidden="true"></div>
+    <figure class="about-portrait">
+      <div class="about-portrait-frame"><span>{{ (perfil.nombre[0] if perfil and perfil.nombre else 'M') }}</span><div class="about-portrait-caption"><span>RETRATO PERSONAL</span><span>ESPACIO RESERVADO · 4:5</span></div></div>
+    </figure>
+    <p class="about-side-note">CURIOSO POR NATURALEZA — APRENDIENDO SIEMPRE.</p>
+  </div>
+</section>
+
+<section class="about-skills" aria-labelledby="skills-title">
+  <div class="about-skills-intro">
+    <p class="eyebrow">02 / HERRAMIENTAS</p>
+    <h2 id="skills-title">Lo que aporto al equipo.</h2>
+  </div>
+  <div class="about-skill-group">
+    <h3><span class="material-symbols-outlined" aria-hidden="true">forum</span>Habilidades blandas</h3>
+    <ol>
+      {% if habilidades_blandas %}
+        {% for habilidad in habilidades_blandas %}<li><span>{{ '%02d'|format(loop.index) }}</span>{{ habilidad.nombre }}</li>{% endfor %}
+      {% else %}
+        <li><span>01</span>Comunicación clara</li><li><span>02</span>Curiosidad y escucha</li><li><span>03</span>Trabajo colaborativo</li><li><span>04</span>Aprendizaje autónomo</li>
+      {% endif %}
+    </ol>
+  </div>
+  <div class="about-skill-group">
+    <h3><span class="material-symbols-outlined" aria-hidden="true">terminal</span>Habilidades duras</h3>
+    <ol>
+      {% if habilidades_duras %}
+        {% for habilidad in habilidades_duras %}<li><span>{{ '%02d'|format(loop.index) }}</span>{{ habilidad.nombre }}</li>{% endfor %}
+      {% else %}
+        <li><span>01</span>Desarrollo frontend</li><li><span>02</span>APIs y bases de datos</li><li><span>03</span>Prototipado de interfaces</li><li><span>04</span>Control de versiones</li>
+      {% endif %}
+    </ol>
+  </div>
+</section>
+
+<section class="about-tech" aria-label="Tecnologías que practico">
+  <div class="about-tech-heading"><span>TECNOLOGÍAS CON LAS QUE PRACTICO</span><span>{{ '%02d'|format(tecnologias|length if tecnologias else 7) }} HERRAMIENTAS</span></div>
+  <div class="about-tech-grid">
+    {% if tecnologias %}
+      {% for tecnologia in tecnologias %}<div class="about-tech-card"><span class="about-tech-number">{{ '%02d'|format(loop.index) }}</span><span class="about-tech-mark">{{ tecnologia.icono if tecnologia.icono else tecnologia.nombre[:2] }}</span><span class="about-tech-name">{{ tecnologia.nombre }}</span></div>{% endfor %}
+    {% else %}
+      {% for tecnologia in tecnologias_base %}<div class="about-tech-card"><span class="about-tech-number">{{ '%02d'|format(loop.index) }}</span><span class="about-tech-mark">{{ tecnologia.marca }}</span><span class="about-tech-name">{{ tecnologia.nombre }}</span></div>{% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<section class="about-contact" aria-labelledby="about-contact-title">
+  <p class="eyebrow">¿TENÉS UNA IDEA?</p>
+  <h2 id="about-contact-title">Hablemos<span class="home-period">.</span></h2>
+  <a class="about-email" href="mailto:hola@misael.dev"><span>hola@misael.dev</span><span class="about-email-action"><span class="material-symbols-outlined" aria-hidden="true">north_east</span>ESCRIBIME</span></a>
+</section>
+{% endblock %}
